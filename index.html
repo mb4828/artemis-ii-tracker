@@ -17,18 +17,24 @@
       font-family: "Space Grotesk", sans-serif;
       overflow: hidden;
     }
-    body::before {
-      content: "";
+    .page-background {
       position: fixed;
-      inset: -20vmax;
+      top: 50%;
+      left: 50%;
       z-index: -1;
-      background: url('background.jpg') center / cover no-repeat; /* https://www.freepik.com/free-photos-vectors/starfield-background */
+      pointer-events: none;
+    }
+    .page-background img {
+      display: block;
+      width: 175vmax;
+      height: auto;
+      transform: translate(-50%, -50%) rotate(0deg);
       transform-origin: center;
       animation: body-background-rotate 1000s linear infinite;
     }
     @keyframes body-background-rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
     }
     .grid {
       display: grid;
@@ -85,6 +91,9 @@
   </style>
 </head>
 <body>
+  <div class="page-background" aria-hidden="true">
+    <img src="background.jpg" alt="">
+  </div>
   <div class="grid">
     <!-- Left column, full height: NASA AROW -->
     <section class="panel nasa-panel">
