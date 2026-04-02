@@ -7,132 +7,33 @@
   <link rel="icon" href="favicon.png" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; }
-    body { 
-      position: relative;
-      background: #000;
-      font-family: "Space Grotesk", sans-serif;
-      overflow: hidden;
-    }
-    .page-background {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      z-index: -1;
-      pointer-events: none;
-    }
-    .page-background img {
-      display: block;
-      width: 175vmax;
-      height: auto;
-      transform: translate(-50%, -50%) rotate(0deg);
-      transform-origin: center;
-      animation: body-background-rotate 1000s linear infinite;
-    }
-    @keyframes body-background-rotate {
-      from { transform: translate(-50%, -50%) rotate(0deg); }
-      to { transform: translate(-50%, -50%) rotate(360deg); }
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      width: 100%;
-      height: 100vh;
-      padding: 16px;
-      gap: 16px;
-      background: transparent;
-    }
-    .panel {
-      position: relative;
-      min-height: 0;
-      background: transparent;
-      overflow: hidden;
-      box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 12px 20px -12px rgba(255,255,255,0.1);
-    }
-    .panel-title {
-      position: absolute;
-      top: 8px;
-      left: 12px;
-      z-index: 2;
-      padding: 10px 14px;
-      background: rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(2px);
-      border-radius: 24px;
-      color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      text-transform: capitalize;
-      line-height: 1.2;
-      pointer-events: auto;
-      cursor: default;
-      transition: opacity 200ms ease;
-    }
-    .panel-title.is-hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-    .panel-title.right {
-      left: auto;
-      right: 12px;
-    }
-    .panel-body {
-      width: 100%;
-      height: 100%;
-      background: #fff;
-    }
-    .nasa-panel {
-      grid-column: 1;
-      grid-row: 1 / 3;
-    }
-    .nasa {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-    .yt-cell {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      background: #000;
-      overflow: hidden;
-    }
-    .video-panel .panel-body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0;
-      background: transparent;
-    }
-    .video-frame {
-      width: 100%;
-      max-height: 105%;
-      aspect-ratio: 16 / 9;
-      background: #000;
-      overflow: hidden;
-    }
-    .yt-cell iframe {
-      width: 100% !important;
-      height: 100% !important;
-      border: none;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="page-background" aria-hidden="true">
     <img src="background.jpg" alt="">
   </div>
   <div class="grid">
-    <!-- Left column, full height: NASA AROW -->
-    <section class="panel nasa-panel">
-      <h2 class="panel-title">💫&nbsp;&nbsp;Mission Tracker</h2>
-      <div class="panel-body">
-        <iframe class="nasa" src="https://www.nasa.gov/missions/artemis-ii/arow/" title="NASA Artemis II AROW" scrolling="no"></iframe>
+    <div class="left-column">
+      <div class="mission-status">
+        <section class="panel status-panel">
+          <span class="status-label">Current Time</span>
+          <span class="status-value" id="mission-time">--</span>
+        </section>
+        <section class="panel status-panel">
+          <span class="status-label">Mission Elapsed Time</span>
+          <span class="status-value" id="elapsed-time">--</span>
+        </section>
       </div>
-    </section>
+
+      <section class="panel nasa-panel">
+        <h2 class="panel-title">💫&nbsp;&nbsp;Mission Tracker</h2>
+        <div class="panel-body">
+          <iframe class="nasa" src="https://www.nasa.gov/missions/artemis-ii/arow/" title="NASA Artemis II AROW" scrolling="no"></iframe>
+        </div>
+      </section>
+    </div>
 
     <!-- Top Right: YouTube -->
     <section class="panel video-panel">
@@ -155,54 +56,6 @@
     </section>
   </div>
 
-  <script>
-    var tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
-    document.head.appendChild(tag);
-
-    document.querySelectorAll('.panel').forEach(function(panel) {
-      var title = panel.querySelector('.panel-title');
-      if (!title) return;
-
-      panel.addEventListener('mouseenter', function() {
-        title.classList.add('is-hidden');
-      });
-
-      panel.addEventListener('mouseleave', function() {
-        title.classList.remove('is-hidden');
-      });
-    });
-
-    function onYouTubeIframeAPIReady() {
-      new YT.Player('player-top-right', {
-        videoId: 'm3kR2KK8TEs',
-        playerVars: { autoplay: 1, rel: 0, modestbranding: 1 },
-        events: {
-          onReady: function(e) {
-            e.target.unMute();
-            e.target.setVolume(100);
-            var f = e.target.getIframe();
-            f.style.width = '100%';
-            f.style.height = '100%';
-            f.style.border = 'none';
-          }
-        }
-      });
-
-      new YT.Player('player-bottom-right', {
-        videoId: '6RwfNBtepa4',
-        playerVars: { autoplay: 1, rel: 0, modestbranding: 1 },
-        events: {
-          onReady: function(e) {
-            e.target.mute();
-            var f = e.target.getIframe();
-            f.style.width = '100%';
-            f.style.height = '100%';
-            f.style.border = 'none';
-          }
-        }
-      });
-    }
-  </script>
+  <script src="scripts.js" defer></script>
 </body>
 </html>

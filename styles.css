@@ -1,0 +1,188 @@
+/* Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  font-family: "Space Grotesk", sans-serif;
+}
+
+/* Background */
+@keyframes body-background-rotate {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+.page-background {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.page-background img {
+  display: block;
+  width: 175vmax;
+  height: auto;
+  transform: translate(-50%, -50%) rotate(0deg);
+  transform-origin: center;
+  animation: body-background-rotate 1000s linear infinite;
+}
+
+/* Layout */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 100%;
+  height: 100vh;
+  gap: 16px;
+  padding: 16px;
+  background: transparent;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  grid-column: 1;
+  grid-row: 1 / 3;
+  gap: 16px;
+  min-height: 0;
+}
+
+/* Shared Panels */
+.panel {
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  background: transparent;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05), 0 12px 20px -12px rgba(255, 255, 255, 0.1);
+}
+
+.panel-body {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+
+.panel-title {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  z-index: 2;
+  padding: 10px 14px;
+  border-radius: 24px;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(2px);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-transform: capitalize;
+  pointer-events: auto;
+  cursor: default;
+  transition: opacity 200ms ease;
+}
+
+.panel-title.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.panel-title.right {
+  right: 12px;
+  left: auto;
+}
+
+/* Mission Clocks */
+.mission-status {
+  display: grid;
+  flex: 0 0 auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.status-panel {
+  padding: 14px 16px;
+  border-radius: 24px;
+  background: rgba(8, 12, 18, 0.72);
+  backdrop-filter: blur(2px);
+  color: #fff;
+}
+
+.status-label {
+  display: block;
+  margin-bottom: 6px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.status-value {
+  display: block;
+  white-space: nowrap;
+  font-family: "Space Mono", monospace;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+/* Mission Tracker */
+.nasa-panel {
+  flex: 1 1 auto;
+}
+
+.nasa-panel .panel-body {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.nasa {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Video Panels */
+.video-panel .panel-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+}
+
+.video-frame {
+  width: 100%;
+  max-height: 105%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #000;
+}
+
+.yt-cell {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #000;
+}
+
+.yt-cell iframe {
+  width: 100% !important;
+  height: 100% !important;
+  border: none;
+}
