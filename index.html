@@ -60,13 +60,19 @@
       z-index: 2;
       padding: 10px 14px;
       background: rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(2px);
       border-radius: 24px;
       color: #fff;
       font-size: 18px;
       font-weight: 700;
       text-transform: capitalize;
       line-height: 1.2;
+      pointer-events: auto;
+      cursor: default;
+      transition: opacity 200ms ease;
+    }
+    .panel-title.is-hidden {
+      opacity: 0;
       pointer-events: none;
     }
     .panel-title.right {
@@ -153,6 +159,19 @@
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     document.head.appendChild(tag);
+
+    document.querySelectorAll('.panel').forEach(function(panel) {
+      var title = panel.querySelector('.panel-title');
+      if (!title) return;
+
+      panel.addEventListener('mouseenter', function() {
+        title.classList.add('is-hidden');
+      });
+
+      panel.addEventListener('mouseleave', function() {
+        title.classList.remove('is-hidden');
+      });
+    });
 
     function onYouTubeIframeAPIReady() {
       new YT.Player('player-top-right', {
