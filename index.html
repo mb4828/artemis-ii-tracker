@@ -11,29 +11,46 @@
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { width: 100%; height: 100%; }
-    body { background: #000; }
+    body { 
+      position: relative;
+      background: #000;
+      font-family: "Space Grotesk", sans-serif;
+      overflow: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -20vmax;
+      z-index: -1;
+      background: url('background.jpg') center / cover no-repeat; /* https://www.freepik.com/free-photos-vectors/starfield-background */
+      transform-origin: center;
+      animation: body-background-rotate 1000s linear infinite;
+    }
+    @keyframes body-background-rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
     .grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
       width: 100%;
       height: 100vh;
-      padding: 0 0 8px 0;
-      gap: 4px;
-      background: #000;
+      padding: 0 12px 12px 12px;
+      gap: 4px 16px;
+      background: transparent;
     }
     .panel {
       display: flex;
       flex-direction: column;
       min-height: 0;
-      background: #000;
+      background: transparent;
       overflow: hidden;
     }
     .panel-title {
       padding: 10px 14px;
-      background: #000;
+      background: transparent;
       color: #fff;
-      font-family: "Space Grotesk", sans-serif;
       font-size: 18px;
       font-weight: 700;
       text-transform: capitalize;
@@ -73,7 +90,7 @@
     <section class="panel nasa-panel">
       <h2 class="panel-title">💫&nbsp;&nbsp;Mission Tracker</h2>
       <div class="panel-body">
-        <iframe class="nasa" src="https://www.nasa.gov/missions/artemis-ii/arow/" title="NASA Artemis II AROW"></iframe>
+        <iframe class="nasa" src="https://www.nasa.gov/missions/artemis-ii/arow/" title="NASA Artemis II AROW" scrolling="no"></iframe>
       </div>
     </section>
 
