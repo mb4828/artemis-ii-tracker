@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artemis II Tracker</title>
+  <link rel="icon" href="https://www.nasa.gov/favicon.ico" type="image/x-icon">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      width: 100%;
+      height: 100vh;
+      gap: 4px;
+      background: #111;
+    }
+    .nasa {
+      grid-column: 1;
+      grid-row: 1 / 3;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    .yt-cell {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+    .yt-cell iframe {
+      width: 100% !important;
+      height: 100% !important;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="grid">
+    <!-- Left column, full height: NASA AROW -->
+    <iframe class="nasa" src="https://www.nasa.gov/missions/artemis-ii/arow/" title="NASA Artemis II AROW"></iframe>
+
+    <!-- Top Right: YouTube -->
+    <div class="yt-cell" id="player-top-right"></div>
+
+    <!-- Bottom Right: YouTube -->
+    <div class="yt-cell" id="player-bottom-right"></div>
+  </div>
+
+  <script>
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+
+    function onYouTubeIframeAPIReady() {
+      new YT.Player('player-top-right', {
+        videoId: 'm3kR2KK8TEs',
+        playerVars: { autoplay: 0, rel: 0, modestbranding: 1 },
+        events: {
+          onReady: function(e) {
+            var f = e.target.getIframe();
+            f.style.width = '100%';
+            f.style.height = '100%';
+            f.style.border = 'none';
+          }
+        }
+      });
+
+      new YT.Player('player-bottom-right', {
+        videoId: '6RwfNBtepa4',
+        playerVars: { autoplay: 0, rel: 0, modestbranding: 1 },
+        events: {
+          onReady: function(e) {
+            var f = e.target.getIframe();
+            f.style.width = '100%';
+            f.style.height = '100%';
+            f.style.border = 'none';
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
