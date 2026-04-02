@@ -58,7 +58,7 @@
     function onYouTubeIframeAPIReady() {
       new YT.Player('player-top-right', {
         videoId: 'm3kR2KK8TEs',
-        playerVars: { autoplay: 0, rel: 0, modestbranding: 1 },
+        playerVars: { autoplay: 1, rel: 0, modestbranding: 1 },
         events: {
           onReady: function(e) {
             var f = e.target.getIframe();
@@ -71,7 +71,7 @@
 
       new YT.Player('player-bottom-right', {
         videoId: '6RwfNBtepa4',
-        playerVars: { autoplay: 0, rel: 0, modestbranding: 1 },
+        playerVars: { autoplay: 1, rel: 0, modestbranding: 1 },
         events: {
           onReady: function(e) {
             var f = e.target.getIframe();
