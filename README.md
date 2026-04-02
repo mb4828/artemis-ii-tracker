@@ -1,5 +1,5 @@
 # Artemis II Tracker
 
-https://mb4828.github.io/artemis-ii-tracker/
+Static GitHub Pages site for tracking Artemis II content.
 
-GitHub Pages is deployed by the workflow in `.github/workflows/pages.yml` on pushes to `main`.
+https://mb4828.github.io/artemis-ii-tracker/
