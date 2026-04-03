@@ -229,6 +229,11 @@ body.cursor-idle * {
     width: 100%;
     min-height: 0;
   }
+
+  .panel-title.right {
+    left: 12px;
+    right: auto;
+  }
 }
 
 /* Mission Tracker */
