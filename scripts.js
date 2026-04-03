@@ -125,7 +125,7 @@ function updateMissionClocks() {
     cst.period +
     ' ' +
     cst.zone;
-  elapsedTime.textContent = formatElapsed(displayTime.getTime() - LAUNCH_TIME_UTC.getTime());
+  elapsedTime.innerHTML = formatElapsed(displayTime.getTime() - LAUNCH_TIME_UTC.getTime());
 }
 
 function getClockDisplayTime() {
@@ -170,10 +170,10 @@ function formatElapsed(ms) {
   var seconds = totalSeconds % 60;
 
   return [
-    String(days).padStart(2, '0') + 'd',
-    String(hours).padStart(2, '0') + 'h',
-    String(minutes).padStart(2, '0') + 'm',
-    String(seconds).padStart(2, '0') + 's',
+    String(days).padStart(2, '0') + '<small>D</small>',
+    String(hours).padStart(2, '0') + '<small>H</small>',
+    String(minutes).padStart(2, '0') + '<small>M</small>',
+    String(seconds).padStart(2, '0') + '<small>S</small>',
   ].join(' ');
 }
 
