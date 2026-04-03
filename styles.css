@@ -177,10 +177,51 @@ body.cursor-idle * {
   text-transform: uppercase;
 }
 
+/* Reduce overlay and clock typography on smaller screens. */
 @media (max-width: 1180px) {
   :root {
     --ui-title-size: 0.9rem;
     --ui-value-size: 0.6rem;
+  }
+}
+
+/* Stack the layout for touch-device portrait phones while preserving viewport height. */
+@media (max-width: 700px) and (pointer: coarse) and (orientation: portrait) {
+  body {
+    overflow: hidden;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow-y: auto;
+  }
+
+  .left-column,
+  .right-column {
+    grid-column: 1;
+  }
+
+  .left-column {
+    height: 100%;
+    min-height: 0;
+  }
+
+  .mission-status {
+    order: -1;
+  }
+
+  .nasa-panel {
+    min-height: 0;
+    flex: 1 1 auto;
+  }
+
+  .right-column {
+    justify-self: stretch;
+    width: 100%;
+    min-height: 0;
   }
 }
 
