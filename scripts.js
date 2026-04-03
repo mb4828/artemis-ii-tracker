@@ -4,6 +4,7 @@ var CLOCK_STOP_TIME_UTC = new Date('2026-04-11T00:21:00Z');
 var CST_OFFSET_MS = 6 * 60 * 60 * 1000;
 var CLOCK_TICK_MS = 1000;
 var PANEL_TITLE_RESHOW_DELAY_MS = 2000;
+var CURSOR_IDLE_DELAY_MS = 2000;
 
 /* Player Config */
 var PLAYER_CONFIGS = [
@@ -27,6 +28,7 @@ var PLAYER_CONFIGS = [
 /* Startup */
 loadYouTubeIframeApi();
 bindPanelTitleHover();
+bindCursorIdleState();
 startMissionClock();
 
 /* App Setup */
@@ -54,6 +56,31 @@ function bindPanelTitleHover() {
       }, PANEL_TITLE_RESHOW_DELAY_MS);
     });
   });
+}
+
+/* Cursor Show/Hide */
+function bindCursorIdleState() {
+  var idleTimeoutId;
+
+  function showCursor() {
+    document.body.classList.remove('cursor-idle');
+  }
+
+  function hideCursor() {
+    document.body.classList.add('cursor-idle');
+  }
+
+  function resetCursorIdleTimer() {
+    showCursor();
+    window.clearTimeout(idleTimeoutId);
+    idleTimeoutId = window.setTimeout(hideCursor, CURSOR_IDLE_DELAY_MS);
+  }
+
+  ['pointermove', 'pointerdown', 'wheel', 'touchstart'].forEach(function (eventName) {
+    window.addEventListener(eventName, resetCursorIdleTimer, { passive: true });
+  });
+
+  resetCursorIdleTimer();
 }
 
 /* Mission Clocks */

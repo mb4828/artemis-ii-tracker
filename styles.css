@@ -18,6 +18,11 @@ body {
   font-family: "Space Grotesk", sans-serif;
 }
 
+body.cursor-idle,
+body.cursor-idle * {
+  cursor: none !important;
+}
+
 /* Background */
 @keyframes body-background-rotate {
   from { transform: translate(-50%, -50%) rotate(0deg); }
