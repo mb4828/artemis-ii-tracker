@@ -58,6 +58,12 @@ body.cursor-idle * {
   animation: body-background-rotate 1000s linear infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .page-background img {
+    animation: none;
+  }
+}
+
 /* Layout */
 .grid {
   display: grid;
