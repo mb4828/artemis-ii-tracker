@@ -3,6 +3,7 @@ var LAUNCH_TIME_UTC = new Date('2026-04-01T22:35:12Z');
 var CLOCK_STOP_TIME_UTC = new Date('2026-04-11T00:21:00Z');
 var CST_OFFSET_MS = 6 * 60 * 60 * 1000;
 var CLOCK_TICK_MS = 1000;
+var PANEL_TITLE_RESHOW_DELAY_MS = 3000;
 
 /* Player Config */
 var PLAYER_CONFIGS = [
@@ -38,14 +39,19 @@ function loadYouTubeIframeApi() {
 function bindPanelTitleHover() {
   document.querySelectorAll('.panel').forEach(function(panel) {
     var title = panel.querySelector('.panel-title');
+    var reshowTimeoutId;
     if (!title) return;
 
     panel.addEventListener('mouseenter', function() {
+      window.clearTimeout(reshowTimeoutId);
       title.classList.add('is-hidden');
     });
 
     panel.addEventListener('mouseleave', function() {
-      title.classList.remove('is-hidden');
+      window.clearTimeout(reshowTimeoutId);
+      reshowTimeoutId = window.setTimeout(function() {
+        title.classList.remove('is-hidden');
+      }, PANEL_TITLE_RESHOW_DELAY_MS);
     });
   });
 }
