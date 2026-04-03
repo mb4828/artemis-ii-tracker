@@ -1,10 +1,24 @@
 /* Constants */
 var LAUNCH_TIME_UTC = new Date('2026-04-01T22:35:12Z');
 var CLOCK_STOP_TIME_UTC = new Date('2026-04-11T00:21:00Z');
-var CST_OFFSET_MS = 6 * 60 * 60 * 1000;
 var CLOCK_TICK_MS = 1000;
 var PANEL_TITLE_RESHOW_DELAY_MS = 2000;
 var CURSOR_IDLE_DELAY_MS = 2000;
+var CENTRAL_TIME_ZONE = 'America/Chicago';
+var CENTRAL_DATE_FORMATTER = new Intl.DateTimeFormat('en-US', {
+  timeZone: CENTRAL_TIME_ZONE,
+  month: '2-digit',
+  day: '2-digit',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: true,
+});
+var CENTRAL_TIME_ZONE_FORMATTER = new Intl.DateTimeFormat('en-US', {
+  timeZone: CENTRAL_TIME_ZONE,
+  timeZoneName: 'short',
+});
 
 /* Player Config */
 var PLAYER_CONFIGS = [
@@ -96,7 +110,21 @@ function updateMissionClocks() {
   var cst = getCstDateParts(displayTime);
 
   missionTime.textContent =
-    cst.month + '/' + cst.day + '/' + cst.year + ' ' + cst.hour + ':' + cst.minute + ':' + cst.second + ' CST';
+    cst.month +
+    '/' +
+    cst.day +
+    '/' +
+    cst.year +
+    ' ' +
+    cst.hour +
+    ':' +
+    cst.minute +
+    ':' +
+    cst.second +
+    ' ' +
+    cst.period +
+    ' ' +
+    cst.zone;
   elapsedTime.textContent = formatElapsed(displayTime.getTime() - LAUNCH_TIME_UTC.getTime());
 }
 
@@ -105,16 +133,33 @@ function getClockDisplayTime() {
 }
 
 function getCstDateParts(date) {
-  var cstTime = new Date(date.getTime() - CST_OFFSET_MS);
+  var parts = CENTRAL_DATE_FORMATTER.formatToParts(date);
+  var values = {};
+
+  parts.forEach(function (part) {
+    if (part.type !== 'literal') {
+      values[part.type] = part.value;
+    }
+  });
 
   return {
-    month: String(cstTime.getUTCMonth() + 1).padStart(2, '0'),
-    day: String(cstTime.getUTCDate()).padStart(2, '0'),
-    year: cstTime.getUTCFullYear(),
-    hour: String(cstTime.getUTCHours()).padStart(2, '0'),
-    minute: String(cstTime.getUTCMinutes()).padStart(2, '0'),
-    second: String(cstTime.getUTCSeconds()).padStart(2, '0'),
+    month: values.month,
+    day: values.day,
+    year: values.year,
+    hour: values.hour,
+    minute: values.minute,
+    second: values.second,
+    period: values.dayPeriod,
+    zone: getCentralTimeZoneLabel(date),
   };
+}
+
+function getCentralTimeZoneLabel(date) {
+  var zonePart = CENTRAL_TIME_ZONE_FORMATTER.formatToParts(date).find(function (part) {
+    return part.type === 'timeZoneName';
+  });
+
+  return zonePart ? zonePart.value : 'CT';
 }
 
 function formatElapsed(ms) {
