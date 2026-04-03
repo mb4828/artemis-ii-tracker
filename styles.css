@@ -11,6 +11,18 @@ body {
   height: 100%;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+:root {
+  --ui-type-scale: clamp(0.78rem, 0.68rem + 0.5vw, 1rem);
+  --ui-title-size: calc(1.125 * var(--ui-type-scale));
+  --ui-label-size: calc(0.75 * var(--ui-type-scale));
+  --ui-value-size: 1.125rem;
+}
+
 body {
   position: relative;
   overflow: hidden;
@@ -102,9 +114,10 @@ body.cursor-idle * {
   background: rgba(0, 0, 0, 0.33);
   backdrop-filter: blur(2px);
   color: #fff;
-  font-size: 18px;
+  font-size: var(--ui-title-size);
   font-weight: 700;
   line-height: 1.2;
+  white-space: nowrap;
   text-transform: capitalize;
   pointer-events: auto;
   cursor: default;
@@ -141,9 +154,10 @@ body.cursor-idle * {
   display: block;
   margin-bottom: 6px;
   color: rgba(255, 255, 255, 0.72);
-  font-size: 12px;
+  font-size: var(--ui-label-size);
   font-weight: 700;
   letter-spacing: 0.08em;
+  white-space: nowrap;
   text-transform: uppercase;
 }
 
@@ -151,7 +165,7 @@ body.cursor-idle * {
   display: block;
   white-space: nowrap;
   font-family: "Space Mono", monospace;
-  font-size: 18px;
+  font-size: var(--ui-value-size);
   font-weight: 700;
   line-height: 1.15;
 }
@@ -161,6 +175,13 @@ body.cursor-idle * {
   margin-left: 2px;
   font-size: 0.75em;
   text-transform: uppercase;
+}
+
+@media (max-width: 1180px) {
+  :root {
+    --ui-title-size: 0.9rem;
+    --ui-value-size: 0.6rem;
+  }
 }
 
 /* Mission Tracker */
